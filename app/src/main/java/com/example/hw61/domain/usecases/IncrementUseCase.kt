@@ -6,6 +6,7 @@ class IncrementUseCase(
     private val counterRepository: CounterRepository,
 ) {
 
-    fun increment() = counterRepository.increment()
-
+    fun execute() {
+        counterRepository.increment()
+    }
 }

@@ -6,6 +6,7 @@ class DecrementUseCase(
     private val counterRepository: CounterRepository,
 ) {
 
-    fun decrement() = counterRepository.decrement()
-
+    fun execute() {
+        counterRepository.decrement()
+    }
 }
