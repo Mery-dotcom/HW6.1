@@ -5,7 +5,7 @@ import com.example.hw61.domain.model.CounterEntity
 import com.example.hw61.domain.model.OperationType
 import com.example.hw61.domain.repository.CounterRepository
 
-class CounterRepositoryImpl: CounterRepository {
+class CounterRepositoryImpl : CounterRepository {
 
     private val api = EmulateService()
 
