@@ -6,34 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
-import com.example.hw61.data.repository.CounterRepositoryImpl
 import com.example.hw61.databinding.FragmentCounterBinding
-import com.example.hw61.domain.repository.CounterRepository
-import com.example.hw61.domain.usecases.DecrementUseCase
-import com.example.hw61.domain.usecases.GetCountUseCase
-import com.example.hw61.domain.usecases.IncrementUseCase
 import com.example.hw61.presentation.view.viewmodels.CounterViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-//@AndroidEntryPoint
 class CounterFragment : Fragment() {
 
     private lateinit var binding: FragmentCounterBinding
-    private val counterRepository: CounterRepository by lazy {
-        CounterRepositoryImpl()
-    }
 
-    private val viewModel: CounterViewModel by viewModels {
-        object : androidx.lifecycle.ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return CounterViewModel(
-                    IncrementUseCase(counterRepository),
-                    DecrementUseCase(counterRepository),
-                    GetCountUseCase(counterRepository)
-                ) as T
-            }
-        }
-    }
+    private val viewModel: CounterViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
