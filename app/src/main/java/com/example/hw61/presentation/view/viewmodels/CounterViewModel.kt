@@ -9,27 +9,26 @@ import com.example.hw61.domain.usecases.GetCountUseCase
 import com.example.hw61.domain.usecases.IncrementUseCase
 
 
-//@HiltViewModel
-class CounterViewModel (
+class CounterViewModel(
     private val incrementUseCase: IncrementUseCase,
     private val decrementUseCase: DecrementUseCase,
     private val getCountUseCase: GetCountUseCase
 ) : ViewModel() {
 
-    private val _counter = MutableLiveData<CounterEntity>()
-    val counter: LiveData<CounterEntity> get() = _counter
+    private val _counter = MutableLiveData(getCountUseCase())
+    val counter: LiveData<CounterEntity> = _counter
 
     fun increment() {
-        incrementUseCase.execute()
+        incrementUseCase()
         updateCounter()
     }
 
     fun decrement() {
-        decrementUseCase.execute()
+        decrementUseCase()
         updateCounter()
     }
 
     fun updateCounter() {
-        _counter.value = getCountUseCase.execute()
+        _counter.value = getCountUseCase()
     }
 }

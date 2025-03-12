@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    id("kotlin-kapt")
-//    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,15 +37,10 @@ android {
     buildFeatures{
         viewBinding = true
     }
-
-//    kapt {
-//        correctErrorTypes = true
-//    }
 }
 
 dependencies {
-//    implementation("com.google.dagger:hilt-android:2.51.1")
-//    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.koin.android)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui.ktx)
 
