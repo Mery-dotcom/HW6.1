@@ -29,7 +29,7 @@ val networkModule = module {
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
         .client(okHttpClient)
-        .baseUrl("https://www.omdbapi.com/")
+        .baseUrl( "https://v6.exchangerate-api.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 }
