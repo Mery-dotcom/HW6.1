@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hw61.data.model.Either
 import com.example.hw61.data.model.ExchangeRatesResponse
 import com.example.hw61.domain.usecases.GetExchangeRatesUseCase
 import kotlinx.coroutines.launch
