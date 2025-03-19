@@ -37,7 +37,6 @@ data class ExchangeRatesResponse(
 //    @SerialName("time_next_update_utc")
 //    var timeNextUpdateUtc: String? = null,
 //    @SerialName("conversion_rates")
-//    val conversion_rates: Map<String, Double>
 //) {
 //    @Serializable
 //    data class ConversionRates(

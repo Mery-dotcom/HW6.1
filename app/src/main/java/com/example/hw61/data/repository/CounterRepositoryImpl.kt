@@ -10,15 +10,15 @@ class CounterRepositoryImpl(
     private val api : EmulateService
 ) : CounterRepository {
 
-    override fun increment() {
+    override suspend fun increment() {
         api.increment()
     }
 
-    override fun decrement() {
+    override suspend fun decrement() {
         api.decrement()
     }
 
-    override fun getCount(): CounterEntity {
+    override suspend fun getCount(): CounterEntity {
         val response = api.getCount()
         return response.toDomain()
     }

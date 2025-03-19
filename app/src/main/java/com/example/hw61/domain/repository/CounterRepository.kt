@@ -4,9 +4,9 @@ import com.example.hw61.domain.model.CounterEntity
 
 interface CounterRepository {
 
-    fun increment()
+    suspend fun increment()
 
-    fun decrement()
+    suspend fun decrement()
 
-    fun getCount(): CounterEntity
+    suspend fun getCount(): CounterEntity
 }
