@@ -6,5 +6,5 @@ class DecrementUseCase(
     private val counterRepository: CounterRepository
 ) {
 
-    operator fun invoke() = counterRepository.decrement()
+    suspend operator fun invoke() = counterRepository.decrement()
 }

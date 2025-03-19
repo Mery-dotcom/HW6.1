@@ -17,7 +17,7 @@ class EmulateService {
         isIncrement = false
     }
 
-    fun getCount(): CounterDto {
+   fun getCount(): CounterDto {
         return CounterDto(
             operationType = if (isIncrement) "increment" else "decrement",
             count = count

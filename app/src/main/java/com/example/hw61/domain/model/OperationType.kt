@@ -8,7 +8,7 @@ enum class OperationType(
     UNKNOWN("unknown");
 
     companion object {
-        fun fromString(value: String): OperationType {
+       suspend fun fromString(value: String): OperationType {
             return OperationType.entries.find { value == it.value }?: UNKNOWN
         }
     }
