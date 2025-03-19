@@ -7,17 +7,17 @@ class EmulateService {
     private var count = 0
     private var isIncrement = true
 
-    suspend fun increment() {
+    fun increment() {
         count++
         isIncrement = true
     }
 
-    suspend fun decrement() {
+    fun decrement() {
         count--
         isIncrement = false
     }
 
-   suspend fun getCount(): CounterDto {
+   fun getCount(): CounterDto {
         return CounterDto(
             operationType = if (isIncrement) "increment" else "decrement",
             count = count
