@@ -24,7 +24,7 @@ class ExchangeRateViewModel(
     )
 
     fun getExchangeRates() {
-        CoroutineScope(dispatcher).launch {
+        viewModelScope.launch(dispatcher) {
             val exchangeData = getExchangeRatesUseCase()
             _exchangeRates.postValue(exchangeData)
         }
