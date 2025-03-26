@@ -1,8 +1,11 @@
 package com.example.hw61.di
 
 import com.example.hw61.data.datasource.network.ApiService
+import com.example.hw61.data.repository.ExchangeRateRepositoryImpl
+import com.example.hw61.domain.repository.ExchangeRateRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,6 +27,9 @@ val networkModule = module {
     single {
         provideLoggingInterceptor()
     }
+
+    single<ExchangeRateRepository> { ExchangeRateRepositoryImpl(apiService = get(), dispatcher = get(
+        named("IO"))) }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {

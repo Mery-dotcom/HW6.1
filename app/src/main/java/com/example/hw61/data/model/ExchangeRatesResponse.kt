@@ -1,11 +1,10 @@
 package com.example.hw61.data.model
 
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
 
 data class ExchangeRatesResponse(
+    @SerializedName("result")
     val result: String,
     val documentation: String,
     val terms_of_use: String,
