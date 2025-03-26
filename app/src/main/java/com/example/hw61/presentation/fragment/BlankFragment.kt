@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.hw61.databinding.FragmentBlankBinding
 import com.example.hw61.presentation.view.viewmodels.ExchangeRateViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BlankFragment : Fragment() {
@@ -26,30 +27,26 @@ class BlankFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListener()
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.getExchangeRates()
-        }
-
-        viewModel.exchangeRates.observe(viewLifecycleOwner) { exchangeRates ->
-            binding.tvExchangeRates.text = exchangeRates.conversion_rates.toString()
-        }
-    }
-
-    private fun setupListener() {
-        binding.btnSearch.setOnClickListener{
+        binding.btnSearch.setOnClickListener {
             val currencyCode = binding.etSearch.text.toString().uppercase()
 
             if (currencyCode.isNotEmpty()) {
-                viewModel.exchangeRates.value?.conversion_rates?.get(currencyCode)?.let { rate ->
+                val exchangeRatesResponse = viewModel.exchangeState.value
+                exchangeRatesResponse?.conversion_rates?.get(currencyCode)?.let { rate ->
                     binding.tvExchangeRates.text = "1 USD = $rate $currencyCode"
                     binding.tvExchangeRates.visibility = View.VISIBLE
                 } ?: run {
                     Toast.makeText(requireContext(), "Currency not found", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(requireContext(), "Enter currency code", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.getExchangeRates()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.exchangeState.collect { data ->
+                binding.tvExchangeRates.text = data.toString()
             }
         }
     }
