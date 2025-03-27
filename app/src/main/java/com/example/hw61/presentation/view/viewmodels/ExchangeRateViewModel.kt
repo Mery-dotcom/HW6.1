@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.hw61.data.model.ExchangeRatesResponse
 import com.example.hw61.domain.usecases.GetExchangeRatesUseCase
 import com.example.hw61.utils.Either
+import com.example.hw61.utils.UIState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,16 +27,30 @@ class ExchangeRateViewModel(
         named("IO")
     )
 
-    private val _exchangeState = MutableStateFlow<ExchangeRatesResponse?>(null)
-    val exchangeState: StateFlow<ExchangeRatesResponse?> = _exchangeState
+    private val _exchangeState = MutableStateFlow<UIState<ExchangeRatesResponse>>(UIState.Empty)
+    val exchangeState: StateFlow<UIState<ExchangeRatesResponse>> = _exchangeState
 
     fun getExchangeRates() {
         viewModelScope.launch(dispatcher) {
+            _exchangeState.value = UIState.Loading
+
             getExchangeRatesUseCase.invoke().collect { result ->
                 when (result) {
-                    is Either.Success -> _exchangeState.value = result.success
+                    is Either.Success -> {
+                        result.success?.let { response ->
+                            if (response.conversion_rates.isNotEmpty()) {
+                                _exchangeState.value = UIState.Success(response)
+                            } else {
+                                _exchangeState.value = UIState.Empty
+                            }
+                        } ?: run {
+                            _exchangeState.value = UIState.Empty
+                        }
+                    }
 
-                    is Either.Error -> _exchangeState.value = null
+                    is Either.Error -> {
+                        _exchangeState.value = UIState.Error(result.error.toString())
+                    }
                 }
             }
         }
