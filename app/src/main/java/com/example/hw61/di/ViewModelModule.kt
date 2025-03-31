@@ -19,7 +19,8 @@ val viewModelModule: Module = module {
 
     viewModel {
         ExchangeRateViewModel(
-            getExchangeRatesUseCase = get()
+            getExchangeRatesUseCase = get(),
+            getExampleUseCase = get()
         )
     }
 }

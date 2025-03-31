@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hw61.data.model.ExchangeRatesResponse
+import com.example.hw61.domain.model.Example
+import com.example.hw61.domain.usecases.GetExampleUseCase
 import com.example.hw61.domain.usecases.GetExchangeRatesUseCase
+import com.example.hw61.presentation.base.BaseViewModel
 import com.example.hw61.utils.Either
 import com.example.hw61.utils.UIState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,10 +21,9 @@ import org.koin.java.KoinJavaComponent.inject
 
 class ExchangeRateViewModel(
     private val getExchangeRatesUseCase: GetExchangeRatesUseCase,
-) : ViewModel() {
+    private val getExampleUseCase: GetExampleUseCase
+) : BaseViewModel() {
 
-    private val _exchangeRates = MutableLiveData<ExchangeRatesResponse>()
-    val exchangeRates: LiveData<ExchangeRatesResponse> = _exchangeRates
     private val dispatcher: CoroutineDispatcher by inject(
         CoroutineDispatcher::class.java,
         named("IO")
@@ -30,29 +32,20 @@ class ExchangeRateViewModel(
     private val _exchangeState = MutableStateFlow<UIState<ExchangeRatesResponse>>(UIState.Empty)
     val exchangeState: StateFlow<UIState<ExchangeRatesResponse>> = _exchangeState
 
+    private val _exampleState = MutableStateFlow<UIState<Example>>(UIState.Empty)
+    val exampleState: StateFlow<UIState<Example>> = _exampleState
+
     fun getExchangeRates() {
-        viewModelScope.launch(dispatcher) {
-            _exchangeState.value = UIState.Loading
+        collectRequest(
+            request = { getExchangeRatesUseCase() },
+            state = _exchangeState,
+            dispatcher = dispatcher
+        )
+    }
 
-            getExchangeRatesUseCase.invoke().collect { result ->
-                when (result) {
-                    is Either.Success -> {
-                        result.success?.let { response ->
-                            if (response.conversion_rates.isNotEmpty()) {
-                                _exchangeState.value = UIState.Success(response)
-                            } else {
-                                _exchangeState.value = UIState.Empty
-                            }
-                        } ?: run {
-                            _exchangeState.value = UIState.Empty
-                        }
-                    }
-
-                    is Either.Error -> {
-                        _exchangeState.value = UIState.Error(result.error.toString())
-                    }
-                }
-            }
+    fun exampleRequest() {
+        collectRequest(state = _exampleState, dispatcher = dispatcher) {
+            getExampleUseCase.invoke()
         }
     }
 }
