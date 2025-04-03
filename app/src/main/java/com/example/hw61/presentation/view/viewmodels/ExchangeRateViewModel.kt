@@ -1,21 +1,14 @@
 package com.example.hw61.presentation.view.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.hw61.data.model.ExchangeRatesResponse
 import com.example.hw61.domain.model.Example
 import com.example.hw61.domain.usecases.GetExampleUseCase
 import com.example.hw61.domain.usecases.GetExchangeRatesUseCase
 import com.example.hw61.presentation.base.BaseViewModel
-import com.example.hw61.utils.Either
 import com.example.hw61.utils.UIState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.inject
 
