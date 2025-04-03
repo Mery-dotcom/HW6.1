@@ -27,18 +27,3 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 }
-
-//when (result) {
-//    is Either.Success -> {
-//        result.success.let { response ->
-//            if (response.conversion_rates.isNotEmpty()) {
-//                this@collectFlow.value = UIState.Success(response)
-//            } else {
-//                this@collectFlow.value = UIState.Empty
-//            }
-//        }
-//    }
-//
-//    is Either.Error -> {
-//        this@collectFlow.value = UIState.Error(result.error.toString())
-//    }
