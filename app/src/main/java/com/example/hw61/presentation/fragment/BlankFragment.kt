@@ -1,21 +1,27 @@
 package com.example.hw61.presentation.fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
+
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import com.example.hw61.databinding.FragmentBlankBinding
-import com.example.hw61.presentation.base.BaseViewModel
 import com.example.hw61.presentation.base.fragment.BaseBlankFragment
+import com.example.hw61.presentation.view.adapters.CharacterAdapter
 import com.example.hw61.presentation.view.viewmodels.ExchangeRateViewModel
 import com.example.hw61.utils.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+
 
 class BlankFragment : BaseBlankFragment<FragmentBlankBinding, ExchangeRateViewModel>(
-    FragmentBlankBinding::inflate,
-    ExchangeRateViewModel::class
+    FragmentBlankBinding::inflate
 ) {
+
+    private val viewModel: ExchangeRateViewModel by viewModel()
+
 
     override fun setupCollectors() {
         viewModel.getExchangeRates()
@@ -43,6 +49,17 @@ class BlankFragment : BaseBlankFragment<FragmentBlankBinding, ExchangeRateViewMo
                 binding.tvExchangeRates.visibility = View.GONE
             }
         )
+
+        val adapter = CharacterAdapter()
+        binding.recyclerView.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characters.collectLatest {
+                    adapter.submitData(it)
+                }
+            }
+        }
     }
 
     override fun setupClickListeners() {

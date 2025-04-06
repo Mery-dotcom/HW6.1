@@ -9,4 +9,6 @@ interface ExchangeRateRepository {
     suspend fun getExchangeRates(): Flow<Either<Throwable, ExchangeRatesResponse>>
 
     suspend fun exampleRequest(): Flow<Either<Throwable, Example>>
+
+    suspend fun cartoonRequest(): Flow<Either<Throwable, Example>>
 }

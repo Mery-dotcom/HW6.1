@@ -5,7 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragment.BlankFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_character"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -18,19 +28,19 @@
         android:id="@+id/etSearch"
         android:hint="Name"
         android:inputType="text"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnSearch"
         android:text="Find"
         android:backgroundTint="#686666"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/tvExchangeRates"
-        android:text="Name of movie"
+        android:text="Name"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"

@@ -29,7 +29,7 @@ val networkModule = module {
     }
 
     single<ExchangeRateRepository> { ExchangeRateRepositoryImpl(apiService = get(), dispatcher = get(
-        named("IO"))) }
+        named("IO")), api = get()) }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {

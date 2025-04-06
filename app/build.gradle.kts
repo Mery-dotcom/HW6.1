@@ -65,4 +65,5 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation (libs.androidx.paging.runtime)
 }

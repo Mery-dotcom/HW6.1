@@ -15,22 +15,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.example.hw61.presentation.base.BaseViewModel
-import com.example.hw61.presentation.base.fragment.Inflater
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.reflect.KClass
+
 
 typealias Inflater<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseBlankFragment<VB : ViewBinding, VM : BaseViewModel>(
-    private val inflate: Inflater<VB>,
-    viewModelKClass: KClass<VM>
+    private val inflate: Inflater<VB>
 ) : Fragment() {
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
-    protected val viewModel: VM by viewModel(viewModelKClass)
     protected lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
